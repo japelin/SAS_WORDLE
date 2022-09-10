@@ -274,4 +274,4 @@ The number of the answer is always an obs number, not a string.
     %WordleCheck
   %end;
 %Mend;
-%Wordle;
+/*%Wordle;*/
