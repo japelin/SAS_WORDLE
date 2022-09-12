@@ -25,9 +25,8 @@
 
   data words;
   	infile words;
-  	length word $ 5 dt 8;
+  	length word $ 5;
   	input word;
-    call missing(dt);
   run;
 
 
@@ -62,7 +61,7 @@ The number of the answer is always an obs number, not a string.
   proc sql noprint;
     select count(word) into :wordcount 
     from words
-    where dt=.;
+    ;
   quit;
   %let pickobs = %sysfunc(rand(Integer,1,&wordcount.));
   %let correctwrd = 0;
