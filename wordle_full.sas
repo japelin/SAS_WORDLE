@@ -103,11 +103,6 @@ The number of the answer is always an obs number, not a string.
     %if &execcnt = 6 %then %let message = PHEW!;
     
     /* replace word datasets */
-    
-    data words;
-      set words(firstobs=&pickobs obs=&pickobs);
-      if not (_n_=&pickobs);
-    run;
     data words;
       set words;
       if not (_n_=&pickobs);
