@@ -232,13 +232,15 @@ The number of the answer is always an obs number, not a string.
     %let _j=%eval(&_j-1);
   %end; %else
   %do;
-    data res;
+    data _null_;
       set words(firstobs=&pickobs obs=&pickobs);
-      length res1-res5 $1 color $8;
+      length res $1 color $8;
       correctwrd=0;
       %do _i=1 %to 5;
-        res&_i=char(upcase("&input"),&_i);
-        idx=index(upcase(word),res&_i);
+        res=char(upcase("&input"),&_i);
+        idx=index(upcase(word),res);
+        cnt=count(upcase(word),res);
+        fnd=find(upcase(word),res,&_i);
         if idx=0 then do;
           color='white';
         end; else
@@ -246,16 +248,25 @@ The number of the answer is always an obs number, not a string.
           color='green';
           correctwrd+1;
         end; else
-        do;
+        if cnt>1 then do;
+          if fnd=&_i then do;
+            color='green';
+            correctwrd+1;
+          end; else 
+          do;
+            color='yellow';
+          end;
+        end; else
+        if color='' then do;
           color='yellow';
         end;
-        call symputx(cats('C',rank(res&_i)-64),color,'G');
-        call symputx(cats('RES',%eval(&execcnt+1),&_i),res&_i,'G');
+        call symputx(cats('C',rank(res)-64),color,'G');
+        call symputx(cats('RES',%eval(&execcnt+1),&_i),res,'G');
         call symputx(cats('CLR',%eval(&execcnt+1),&_i),color,'G');
+        color='';
       %end;
       call symputx('correctwrd',correctwrd,'G');
       %let execcnt=%eval(&execcnt+1);
-      keep res:;
     run;
   %end;
   %let input=;
