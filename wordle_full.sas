@@ -83,7 +83,6 @@ The number of the answer is always an obs number, not a string.
   run;
 
 %Mend;
-%ResetWords
 
 /* Create keyboard array alphabet and results into macro variables */
 
