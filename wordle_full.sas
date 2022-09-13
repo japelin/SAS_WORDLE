@@ -51,6 +51,42 @@ Define words and other flag variables.
 The word is always a random word.
 The number of the answer is always an obs number, not a string.
 */
+
+/* Create line in %Window */
+data _null_;
+  length line $800;
+  do i=1 to 6;
+    line='';
+    do j=1 to 5;
+      /* Create line in %Window -> #6 @16 RES11 1 attr=REV_VIDEO color=&CLR11 PROTECT=yes */
+      line=cat(trim(line),' #',i+5,' @',14+j*2,' RES',i,j,' 1 ','attr=REV_VIDEO color=&CLR',i,j,' PROTECT=YES');
+    end;
+    call symputx(cats('def_result',i),line);
+  end;
+  line='';
+  j=1;
+  do i=17,23,5 ,18,20,25,21,9 ,15,16;
+    /* create line in %Window -> #15 @12 &A17 attr=REV_VIDEO color=&C17 PROTECT=YES*/
+    line=cat(trim(line),'#15 @',10+j*2,' &A',i,' attr=REV_VIDEO color=&C',i,' PROTECT=YES');
+    j+1;
+  end;
+  call symputx('def_keyboard1',line);
+  line='';
+  j=1;
+  do i=1 ,19,4 ,6 ,7 ,8 ,10,11,12;
+    line=cat(trim(line),'#17 @',10+j*2,' &A',i,' attr=REV_VIDEO color=&C',i,' PROTECT=YES');
+    j+1;
+  end;
+  call symputx('def_keyboard2',line);
+  line='';
+  j=1;
+  do i=26,24,3 ,22,2 ,14,13;
+    line=cat(trim(line),'#19 @',12+j*2,' &A',i,' attr=REV_VIDEO color=&C',i,' PROTECT=YES');
+    j+1;
+  end;
+  call symputx('def_keyboard3',line);
+run;
+
 %global wordcount;    /* obs of work.words dataset */
 %global pickobs;      /* specify 1 obs of work.word dataset */
 %global correctwrd;   /* correct words count of user type */
@@ -132,73 +168,18 @@ The number of the answer is always an obs number, not a string.
     #1 @8 "Welcome to WORDLE in SAS"
     #2 @8 "Enter 5 charactors and press Enter"
     #4 @16 input 5 attr=underline REQUIRED=yes PROTECT=&PROTECT color=red
-    
-    #6  @16 RES11 1 attr=REV_VIDEO color=&CLR11 PROTECT=YES
-    #6  @18 RES12 1 attr=REV_VIDEO color=&CLR12 PROTECT=YES
-    #6  @20 RES13 1 attr=REV_VIDEO color=&CLR13 PROTECT=YES
-    #6  @22 RES14 1 attr=REV_VIDEO color=&CLR14 PROTECT=YES
-    #6  @24 RES15 1 attr=REV_VIDEO color=&CLR15 PROTECT=YES
-    
-    #7  @16 RES21 1 attr=REV_VIDEO color=&CLR21 PROTECT=YES
-    #7  @18 RES22 1 attr=REV_VIDEO color=&CLR22 PROTECT=YES
-    #7  @20 RES23 1 attr=REV_VIDEO color=&CLR23 PROTECT=YES
-    #7  @22 RES24 1 attr=REV_VIDEO color=&CLR24 PROTECT=YES
-    #7  @24 RES25 1 attr=REV_VIDEO color=&CLR25 PROTECT=YES
-    
-    #8  @16 RES31 1 attr=REV_VIDEO color=&CLR31 PROTECT=YES
-    #8  @18 RES32 1 attr=REV_VIDEO color=&CLR32 PROTECT=YES
-    #8  @20 RES33 1 attr=REV_VIDEO color=&CLR33 PROTECT=YES
-    #8  @22 RES34 1 attr=REV_VIDEO color=&CLR34 PROTECT=YES
-    #8  @24 RES35 1 attr=REV_VIDEO color=&CLR35 PROTECT=YES
-    
-    #9  @16 RES41 1 attr=REV_VIDEO color=&CLR41 PROTECT=YES
-    #9  @18 RES42 1 attr=REV_VIDEO color=&CLR42 PROTECT=YES
-    #9  @20 RES43 1 attr=REV_VIDEO color=&CLR43 PROTECT=YES
-    #9  @22 RES44 1 attr=REV_VIDEO color=&CLR44 PROTECT=YES
-    #9  @24 RES45 1 attr=REV_VIDEO color=&CLR45 PROTECT=YES
-    
-    #10 @16 RES51 1 attr=REV_VIDEO color=&CLR51 PROTECT=YES
-    #10 @18 RES52 1 attr=REV_VIDEO color=&CLR52 PROTECT=YES
-    #10 @20 RES53 1 attr=REV_VIDEO color=&CLR53 PROTECT=YES
-    #10 @22 RES54 1 attr=REV_VIDEO color=&CLR54 PROTECT=YES
-    #10 @24 RES55 1 attr=REV_VIDEO color=&CLR55 PROTECT=YES
-    
-    #11 @16 RES61 1 attr=REV_VIDEO color=&CLR61 PROTECT=YES
-    #11 @18 RES62 1 attr=REV_VIDEO color=&CLR62 PROTECT=YES
-    #11 @20 RES63 1 attr=REV_VIDEO color=&CLR63 PROTECT=YES
-    #11 @22 RES64 1 attr=REV_VIDEO color=&CLR64 PROTECT=YES
-    #11 @24 RES65 1 attr=REV_VIDEO color=&CLR65 PROTECT=YES
+    &def_result1
+    &def_result2
+    &def_result3
+    &def_result4
+    &def_result5
+    &def_result6
     
     #13 @12 message 30 color=black PROTECT=YES
-    
-    #15 @12 &A17 attr=REV_VIDEO color=&C17 PROTECT=YES
-    #15 @14 &A23 attr=REV_VIDEO color=&C23 PROTECT=YES
-    #15 @16 &A5  attr=REV_VIDEO color=&C5  PROTECT=YES
-    #15 @18 &A18 attr=REV_VIDEO color=&C18 PROTECT=YES
-    #15 @20 &A20 attr=REV_VIDEO color=&C20 PROTECT=YES
-    #15 @22 &A25 attr=REV_VIDEO color=&C25 PROTECT=YES
-    #15 @24 &A21 attr=REV_VIDEO color=&C21 PROTECT=YES
-    #15 @26 &A9  attr=REV_VIDEO color=&C9  PROTECT=YES
-    #15 @28 &A15 attr=REV_VIDEO color=&C15 PROTECT=YES
-    #15 @30 &A16 attr=REV_VIDEO color=&C16 PROTECT=YES
-    
-    #17 @12 &A1  attr=REV_VIDEO color=&C1  PROTECT=YES
-    #17 @14 &A19 attr=REV_VIDEO color=&C19 PROTECT=YES
-    #17 @16 &A4  attr=REV_VIDEO color=&C4  PROTECT=YES
-    #17 @18 &A6  attr=REV_VIDEO color=&C6  PROTECT=YES
-    #17 @20 &A7  attr=REV_VIDEO color=&C7  PROTECT=YES
-    #17 @22 &A8  attr=REV_VIDEO color=&C8  PROTECT=YES
-    #17 @24 &A10 attr=REV_VIDEO color=&C10 PROTECT=YES
-    #17 @26 &A11 attr=REV_VIDEO color=&C11 PROTECT=YES
-    #17 @28 &A12 attr=REV_VIDEO color=&C12 PROTECT=YES
-    
-    #19 @14 &A26 attr=REV_VIDEO color=&C26 PROTECT=YES
-    #19 @16 &A24 attr=REV_VIDEO color=&C24 PROTECT=YES
-    #19 @18 &A3  attr=REV_VIDEO color=&C3  PROTECT=YES
-    #19 @20 &A22 attr=REV_VIDEO color=&C22 PROTECT=YES
-    #19 @22 &A2  attr=REV_VIDEO color=&C2  PROTECT=YES
-    #19 @24 &A14 attr=REV_VIDEO color=&C14 PROTECT=YES
-    #19 @26 &A13 attr=REV_VIDEO color=&C13 PROTECT=YES
+
+    &def_keyboard1
+    &def_keyboard2
+    &def_keyboard3
   ;
 
   %display wordleWindow;
