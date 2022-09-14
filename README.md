@@ -20,7 +20,7 @@ run;
 %Wordle
 ```
 
-## If you use SAS9.4 M5 or before, submit below code.
+## If you use SAS9.4 M5 or earlier, submit below code.
 
 ```
 filename wordle temp;
